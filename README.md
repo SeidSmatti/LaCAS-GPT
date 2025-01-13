@@ -84,7 +84,7 @@ Chacun contient une application Flask (avec son propre `main.py` et son `require
 
 Dans votre interface de création de chatbot (ou de “gpt” préconfiguré) :
 1. Créez deux “actions” (ou équivalents, selon la plateforme) correspondant chacune à l’une de vos APIs.
-2. Utilisez le schéma approprié que vous trouverez dans le dossier `/schemas/` pour définir la structure des requêtes/réponses à vos services Flask.
+2. Utilisez le schéma OpenAPI approprié que vous trouverez dans le dossier `/schemas/` pour définir la structure des requêtes/réponses à vos services Flask. (Assurez-vous de renseigner l'URL de votre endpoint dans le champ approprié au début de chaque schéma)
 
 ### 4. Configurer le prompt
 
