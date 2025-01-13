@@ -1,0 +1,113 @@
+openapi: 3.1.0
+info:
+  title: LaCAS GPT Extractor API
+  version: '1.0.0'
+servers:
+  - url: URLdeVOTREendpointIci 
+paths:
+  /process:
+    post:
+      operationId: processLink
+      summary: Fetch and process the PDF from the provided URL.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - url
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  description: The URL of the PDF to fetch and process.
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    required:
+                      - message
+                      - session_id
+                      - total_chunks
+                    properties:
+                      message:
+                        type: string
+                        description: Message indicating that the file is large.
+                      session_id:
+                        type: string
+                        description: Session identifier for subsequent requests.
+                      total_chunks:
+                        type: integer
+                        description: Total number of chunks the text has been divided into.
+                  - type: object
+                    required:
+                      - chunk
+                      - session_id
+                    properties:
+                      chunk:
+                        type: string
+                        description: The first chunk of extracted text.
+                      session_id:
+                        type: string
+                        description: Session identifier for subsequent requests.
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /reply:
+    post:
+      operationId: handleReply
+      summary: Handle user replies to proceed with processing or request specific chunks.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - session_id
+                - message
+              properties:
+                session_id:
+                  type: string
+                  description: The session identifier received from the `/process` endpoint.
+                message:
+                  type: string
+                  description: User message to confirm processing or request a specific chunk.
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - chunk
+                properties:
+                  chunk:
+                    type: string
+                    description: The requested chunk of extracted text.
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: Error message detailing what went wrong.
+

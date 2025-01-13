@@ -1,0 +1,190 @@
+openapi: 3.1.0
+info:
+  title: LaCAS GPT metadata retriever
+  version: 1.0.0
+  description: A service that queries multiple APIs based on a search term.
+servers:
+  - url: URLdeVOTREenpointICI
+paths:
+  /search:
+    get:
+      summary: Search across multiple APIs
+      description: Returns search results from various APIs based on the provided query parameter.
+      operationId: searchAPIs
+      parameters:
+        - in: query
+          name: query
+          schema:
+            type: string
+          required: true
+          description: The search term to query.
+      responses:
+        '200':
+          description: A JSON object containing search results from multiple APIs.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  HAL:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/HALResult'
+                  Nakala:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NakalaResult'
+                  Zenodo:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ZenodoResult'
+                  Others:
+                    type: object
+                    properties:
+                      ISIDORE:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/IsidoreResult'
+                      ArXiv:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ArxivResult'
+                      ISTEX:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/IstexResult'
+        '400':
+          description: Bad Request - Missing or invalid query parameter.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Please provide a query parameter"
+components:
+  schemas:
+    HALResult:
+      type: object
+      properties:
+        Title:
+          type: string
+        Abstract:
+          type: string
+        Submitted Date:
+          type: string
+        Document Type:
+          type: string
+        URI:
+          type: string
+      required:
+        - Title
+        - Abstract
+        - Submitted Date
+        - Document Type
+        - URI
+
+    NakalaResult:
+      type: object
+      properties:
+        Identifier:
+          type: string
+        Status:
+          type: string
+        Creation Date:
+          type: string
+        Title:
+          type: string
+        Description:
+          type: string
+      required:
+        - Identifier
+        - Status
+        - Creation Date
+        - Title
+        - Description
+
+    ZenodoResult:
+      type: object
+      properties:
+        Title:
+          type: string
+        Abstract:
+          type: string
+        Submitted Date:
+          type: string
+        Document Type:
+          type: string
+        URI:
+          type: string
+      required:
+        - Title
+        - Abstract
+        - Submitted Date
+        - Document Type
+        - URI
+
+    IsidoreResult:
+      type: object
+      properties:
+        Title:
+          type: string
+        Abstract:
+          type: string
+        Submitted Date:
+          type: string
+        Document Type:
+          type: string
+        URI:
+          type: string
+      required:
+        - Title
+        - Abstract
+        - Submitted Date
+        - Document Type
+        - URI
+
+    ArxivResult:
+      type: object
+      properties:
+        Title:
+          type: string
+        Abstract:
+          type: string
+        Submitted Date:
+          type: string
+        Document Type:
+          type: string
+        Authors:
+          type: string
+        URI:
+          type: string
+      required:
+        - Title
+        - Abstract
+        - Submitted Date
+        - Document Type
+        - Authors
+        - URI
+
+    IstexResult:
+      type: object
+      properties:
+        Title:
+          type: string
+        Abstract:
+          type: string
+        Submitted Date:
+          type: string
+        Document Type:
+          type: string
+        URI:
+          type: string
+      required:
+        - Title
+        - Abstract
+        - Submitted Date
+        - Document Type
+        - URI
+
