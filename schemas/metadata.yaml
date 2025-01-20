@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: LaCAS GPT metadata retriever
+  title: LaCAS GPT metadata retriever API
   version: 1.0.0
   description: A service that queries multiple APIs based on a search term.
 servers:

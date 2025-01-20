@@ -27,7 +27,7 @@ def fetch_and_extract_text(url):
     return text
 
 def fetch_hal_pdf_url(url):
-    # Ajouter '/document' à l'URL
+    # Ajouter '/document' à l'URL pour accéder au PDF
     if not url.endswith('/'):
         url += '/'
     pdf_url = url + 'document'
@@ -39,7 +39,7 @@ def fetch_zenodo_pdf_url(url):
     response.raise_for_status()
     soup = BeautifulSoup(response.content, 'html.parser')
     
-    # Trouver la balise <a> correspondant à vos critères
+    # Trouver la balise <a> correspondant au bouton de téléchargement
     # <a role="button" class="ui compact mini button" href="...">Download</a>
     download_links = soup.find_all('a', {'role': 'button', 'class': 'ui compact mini button'})
     for link in download_links:
